@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content=#58b77a>
-  <title>好啵的博客</title>
+  <title>实现一个简单neural networks | 好啵的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="haoboxuxu">
   <meta name="keywords" content="">
@@ -62,36 +62,25 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
-<div id="page">
+<div class="single">
 
-<div id="lx-aside" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/cover.jpeg)">
+<div id="page">
+<div id="lx-aside" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
   <div class="overlay">
-  <div class="featured">
+  <div class="page-title">
     <div class="avatar"><a href="/"><img src="/images/avatar.jpg"></a></div>
-    <span>haoboxuxu</span>
-    <h1>好啵的博客</h1>
+    <span>2019-10-09</span>
+    <h2>实现一个简单neural...</h2>
     
-    
-  </div>
-  </div>
+    </div>
+</div>
 </div>
 
 <div id="lx-main-content">
   <div class="lx-post">
-
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2021/04/20/%E6%96%B0%E5%8D%9A%E5%AE%A2/">新博客</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2021-04-20</span>
-      <p><h1 id="大家好这是新的家园"><a href="#大家好这是新的家园" class="headerlink" title="大家好这是新的家园"></a>大家好这是新的家园</h1><h5 id="老的博客会恢复过来的，别担心"><a href="#老的博客会恢复过来的，别担心" class="headerlink" title="老的博客会恢复过来的，别担心"></a>老的博客会恢复过来的，别担心</h5></p>
-      <div class="post-button"><a class="btn" href="/2021/04/20/%E6%96%B0%E5%8D%9A%E5%AE%A2/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
-    </div>
-  </div>
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2019/10/09/%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95neural-networks/">实现一个简单neural networks</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2019-10-09</span>
-      <p><p><a target="_blank" rel="noopener" href="https://github.com/haoboxuxu/Tensorflow-Theory/blob/master/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/9_%E6%89%8B%E5%86%99%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.py">源代码</a><br>先定义一些数据，X和y</p>
+    <div class="lx-entry padding">
+      <div>
+        <p><a target="_blank" rel="noopener" href="https://github.com/haoboxuxu/Tensorflow-Theory/blob/master/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/9_%E6%89%8B%E5%86%99%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.py">源代码</a><br>先定义一些数据，X和y</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">X = np.array([[<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">              [<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>],</span><br><span class="line">              [<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">              [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]])</span><br><span class="line">y = np.array([[<span class="number">0</span>],</span><br><span class="line">              [<span class="number">1</span>],</span><br><span class="line">              [<span class="number">1</span>],</span><br><span class="line">              [<span class="number">0</span>]])</span><br></pre></td></tr></table></figure>
 
 <p>然后是sigmoid激活函数，deriv true是前向传播，就是常见的sigmoid，deriv false为反向传播，就是sigmoid求导的结果，如果不明白为什么是x*(1-x)，可以看如下的求导，这里的x是sigmoid(x)</p>
@@ -103,13 +92,41 @@
 <p>然后我们迭代一下，这里的l1和l2是正向，需要sigmoid。然后loss就是y – l2<br>l2_delta是反向，这里求导，l1_error和最后的loss是同理的，这两个sigmoid传入都是false。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">50000</span>):</span><br><span class="line">    l0 = X</span><br><span class="line">    l1 = sigmoid(np.dot(l0, w0))</span><br><span class="line">    l2 = sigmoid(np.dot(l1, w1))</span><br><span class="line"></span><br><span class="line">    l2_error = y - l2</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (j % <span class="number">100</span>) == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;err = &quot;</span> + <span class="built_in">str</span>(np.mean(np.<span class="built_in">abs</span>(l2_error))))</span><br><span class="line"></span><br><span class="line">    l2_delta = l2_error * sigmoid(l2, <span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    l1_error = l2_delta.dot(w1.T)</span><br><span class="line">    l1_delta = l1_error * sigmoid(l1, <span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    w1 += l1.T.dot(l2_delta)</span><br><span class="line">    w0 += l0.T.dot(l1_delta)</span><br></pre></td></tr></table></figure>
 
-</p>
-      <div class="post-button"><a class="btn" href="/2019/10/09/%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95neural-networks/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+
+      </div>
     </div>
   </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover prev lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-l.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2021/04/20/%E6%96%B0%E5%8D%9A%E5%AE%A2/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>新博客</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover next lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-r.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="#">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>No older post</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
 
-
-
+</div>
 
 <footer>
   <div>
@@ -117,8 +134,6 @@
   </div>
 </footer>
 
-  </div>
-</div>
 </div>
 
 <button class="hamburger hamburger--arrow-r" type="button">
