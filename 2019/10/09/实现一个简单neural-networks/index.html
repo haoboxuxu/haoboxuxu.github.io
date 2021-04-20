@@ -86,6 +86,8 @@
 <p>然后是sigmoid激活函数，deriv true是前向传播，就是常见的sigmoid，deriv false为反向传播，就是sigmoid求导的结果，如果不明白为什么是x*(1-x)，可以看如下的求导，这里的x是sigmoid(x)</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span>(<span class="params">x, deriv=<span class="literal">False</span></span>):</span></span><br><span class="line">    <span class="keyword">if</span> deriv == <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">return</span> x * (<span class="number">1</span> - x)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> / (<span class="number">1</span> + np.exp(-x))</span><br></pre></td></tr></table></figure>
 
+<img src="/2019/10/09/%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95neural-networks/%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95neural-networks_1.jpg" class="" title="实现一个简单neural-networks_1">
+
 <p>做一个两层的nn，这里的w0和w1映射到（-1，1），所以做了<em>2和+1操作，注意维度，w0是和X相乘，w1是和（w0</em>X）结果相乘。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">w0 = <span class="number">2</span> * np.random.random((<span class="number">3</span>, <span class="number">4</span>)) - <span class="number">1</span></span><br><span class="line">w1 = <span class="number">2</span> * np.random.random((<span class="number">4</span>, <span class="number">1</span>)) - <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
@@ -100,12 +102,12 @@
 <div class="lx-navigation">
 	<div class="lx-cover prev lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-l.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="/2021/04/20/%E6%96%B0%E5%8D%9A%E5%AE%A2/">
+		<a class="copy" href="/2020/01/09/Jump-Consistent-Hash/">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Next</span>
-						<h3>新博客</h3>
+						<h3>Jump Co...</h3>
 					</div>
 				</div>
 			</div>
@@ -113,12 +115,12 @@
 	</div>
         <div class="lx-cover next lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-r.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="#">
+		<a class="copy" href="/2019/03/13/%E5%89%8D%E5%BA%8F-%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E8%BF%98%E5%8E%9F%E4%BA%8C%E5%8F%89%E6%A0%91/">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Prev</span>
-						<h3>No older post</h3>
+						<h3>前序/中序遍历...</h3>
 					</div>
 				</div>
 			</div>

@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content=#58b77a>
-  <title>新博客 | 好啵的博客</title>
+  <title>前序/中序遍历还原二叉树 | 好啵的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="haoboxuxu">
   <meta name="keywords" content="">
@@ -69,8 +69,8 @@
   <div class="overlay">
   <div class="page-title">
     <div class="avatar"><a href="/"><img src="/images/avatar.jpg"></a></div>
-    <span>2021-04-20</span>
-    <h2>新博客</h2>
+    <span>2019-03-13</span>
+    <h2>前序/中序遍历还原二叉树</h2>
     
     </div>
 </div>
@@ -80,7 +80,11 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <h1 id="大家好这是新的家园"><a href="#大家好这是新的家园" class="headerlink" title="大家好这是新的家园"></a>大家好这是新的家园</h1><h5 id="老的博客会恢复过来的，别担心"><a href="#老的博客会恢复过来的，别担心" class="headerlink" title="老的博客会恢复过来的，别担心"></a>老的博客会恢复过来的，别担心</h5>
+        <img src="/2019/03/13/%E5%89%8D%E5%BA%8F-%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E8%BF%98%E5%8E%9F%E4%BA%8C%E5%8F%89%E6%A0%91/%E5%89%8D%E5%BA%8F-%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E8%BF%98%E5%8E%9F%E4%BA%8C%E5%8F%89%E6%A0%91_1.jpg" class="" title="前序-中序遍历还原二叉树_1">
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">2000</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> pre[maxn];</span><br><span class="line"><span class="keyword">int</span> in[maxn];</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> date;</span><br><span class="line">    node *left_child;</span><br><span class="line">    node *right_child;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">node* <span class="title">create</span><span class="params">(<span class="keyword">int</span> preL, <span class="keyword">int</span> preR, <span class="keyword">int</span> inL, <span class="keyword">int</span> inR)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(preL &gt; preR)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    node *root = <span class="keyword">new</span> node;</span><br><span class="line">    root-&gt;date = pre[preL];</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i = inL; i &lt;= inR; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(in[i] == root-&gt;date)&#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> left_len = i - inL;</span><br><span class="line">    root-&gt;left_child = <span class="built_in">create</span>(preL+<span class="number">1</span>, preR+left_len, inL, i<span class="number">-1</span>);</span><br><span class="line">    root-&gt;right_child = <span class="built_in">create</span>(preL+left_len+<span class="number">1</span>+<span class="number">1</span>, preR, i+<span class="number">1</span>, inR);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       </div>
     </div>
   </div>
@@ -88,12 +92,12 @@
 <div class="lx-navigation">
 	<div class="lx-cover prev lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-l.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="/2021/04/21/%E7%BE%8E%E5%A6%99%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%92%8C%E5%AE%87%E5%AE%99%F0%9F%8C%8C/">
+		<a class="copy" href="/2019/10/09/%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95neural-networks/">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Next</span>
-						<h3>美妙的随机数和...</h3>
+						<h3>实现一个简单n...</h3>
 					</div>
 				</div>
 			</div>
@@ -101,12 +105,12 @@
 	</div>
         <div class="lx-cover next lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-r.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="/2020/08/27/%E6%A0%91%E9%99%A4%E9%81%8D%E5%8E%86%E5%A4%96%E7%9A%84%E4%B8%80%E4%BA%9B%E9%AA%9A%EF%BC%88%E6%9C%80%E5%90%8E%E7%9A%84%F0%9F%90%9F%EF%BC%89/">
+		<a class="copy" href="#">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Prev</span>
-						<h3>树除遍历外的一...</h3>
+						<h3>No older post</h3>
 					</div>
 				</div>
 			</div>
