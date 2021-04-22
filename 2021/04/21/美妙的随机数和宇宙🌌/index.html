@@ -15,13 +15,13 @@
     theme: 'lx',
     version: '0.3.9',
     localsearch:{
-      "enable": false,
+      "enable": true,
       "trigger": "auto",
       "top_n_per_article": 1,
       "unescape": false,
       "preload": false
       },
-    path: 'null'
+    path: 'search.xml'
   };
 </script>
 
@@ -63,16 +63,37 @@
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
 <div class="single">
+<a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
 
 <div id="page">
-<div id="lx-aside" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
+<div id="lx-aside" style="background-image: url(/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
   <div class="overlay">
   <div class="page-title">
     <div class="avatar"><a href="/"><img src="/images/avatar.jpg"></a></div>
     <span>2021-04-21</span>
     <h2>美妙的随机数和宇宙🌌</h2>
     
-    </div>
+    <div class="social-links">
+    <a href="https://github.com/haoboxuxu" target="_blank"><i class="fa fa-github fa-fw"></i></a>
+    <a href="https://weibo.com/haoboxuxu" target="_blank"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://twitter.com/haoboxuxu" target="_blank"><i class="fa fa-twitter fa-fw"></i></a>
+</div></div>
 </div>
 </div>
 
@@ -80,7 +101,11 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <h5 id="最近的叫了WWDC2021作品，然后我凑巧通过伪随机数生成一个SkyBox，说一下思路嘿嘿"><a href="#最近的叫了WWDC2021作品，然后我凑巧通过伪随机数生成一个SkyBox，说一下思路嘿嘿" class="headerlink" title="最近的叫了WWDC2021作品，然后我凑巧通过伪随机数生成一个SkyBox，说一下思路嘿嘿"></a>最近的叫了WWDC2021作品，然后我凑巧通过伪随机数生成一个SkyBox，说一下思路嘿嘿</h5><p>然后这篇文主要是写给有了解过Ray Tracing in one weekend看的<br>下面代码都是Metal<br>这个随机书算法是从StackOverflow拿过来的，日常CV嘿嘿，但是原回答没说怎么用，这几我姑且把x和y算作屏幕像素的texturecoord的x和y<br>z是从CPU那边buffer过来的时钟信号，主要是每一帧能z+1就好了</p>
+        <hr>
+<p>最近的交了WWDC2021作品，然后我凑巧通过伪随机数生成一个SkyBox，说一下思路嘿嘿</p>
+<span id="more"></span>
+
+<h5 id="最近的交了WWDC2021作品，然后我凑巧通过伪随机数生成一个SkyBox，说一下思路嘿嘿"><a href="#最近的交了WWDC2021作品，然后我凑巧通过伪随机数生成一个SkyBox，说一下思路嘿嘿" class="headerlink" title="最近的交了WWDC2021作品，然后我凑巧通过伪随机数生成一个SkyBox，说一下思路嘿嘿"></a>最近的交了WWDC2021作品，然后我凑巧通过伪随机数生成一个SkyBox，说一下思路嘿嘿</h5><p>然后这篇文主要是写给有了解过Ray Tracing in one weekend看的<br>下面代码都是Metal<br>这个随机书算法是从StackOverflow拿过来的，日常CV嘿嘿，但是原回答没说怎么用，这几我姑且把x和y算作屏幕像素的texturecoord的x和y<br>z是从CPU那边buffer过来的时钟信号，主要是每一帧能z+1就好了</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Generate a random float in the range [0.0f, 1.0f] using x, y, and z (based on the xor128 algorithm)</span></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">randomer_gen_float</span><span class="params">(thread <span class="keyword">const</span> uint2&amp; position, <span class="keyword">int</span> z)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> seed = position.x + position.y * <span class="number">57</span> + z * <span class="number">241</span>;</span><br><span class="line">    seed= (seed&lt;&lt; <span class="number">13</span>) ^ seed;</span><br><span class="line">    <span class="keyword">return</span> (( <span class="number">1.0</span> - ( (seed * (seed * seed * <span class="number">15731</span> + <span class="number">789221</span>) + <span class="number">1376312589</span>) &amp; <span class="number">2147483647</span>) / <span class="number">1073741824.0f</span>) + <span class="number">1.0f</span>) / <span class="number">2.0f</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这里写了一个SkyBox的Material，参数什么的姑且不看，<br>主要是c：和原书中生成天空渐变色一样<br>     float rd是vec3的三维随机数，别忘了z要+1、+2，不然一个像素内的时间种子z是一样的<br>     pow是滤波，需要把rd中偏向灰白色的像素过滤掉，只留下发亮的星星✨，把✨给我们的star，然后SkyBox这支Material会反射回去</p>
@@ -94,7 +119,7 @@
   </div>
 </div>
 <div class="lx-navigation">
-	<div class="lx-cover prev lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-l.jpeg)">
+	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer-l.jpeg)">
 		<div class="overlay"></div>
 		<a class="copy" href="#">
 			<div class="display-t">
@@ -107,14 +132,14 @@
 			</div>
 		</a>
 	</div>
-        <div class="lx-cover next lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-r.jpeg)">
+        <div class="lx-cover next lx-cover-sm" style="background-image: url(/images/footer-r.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="/2021/04/20/%E6%96%B0%E5%8D%9A%E5%AE%A2/">
+		<a class="copy" href="/2020/08/27/%E6%A0%91%E9%99%A4%E9%81%8D%E5%8E%86%E5%A4%96%E7%9A%84%E4%B8%80%E4%BA%9B%E9%AA%9A%EF%BC%88%E6%9C%80%E5%90%8E%E7%9A%84%F0%9F%90%9F%EF%BC%89/">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Prev</span>
-						<h3>新博客</h3>
+						<h3>树除遍历外的一...</h3>
 					</div>
 				</div>
 			</div>
@@ -123,10 +148,10 @@
 </div>
 
 </div>
-
+<div class="comment"><div id="comments"></div></div>
 <footer>
   <div>
-  Copyright &copy; 2021.<a href="/">好啵的博客</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  Copyright &copy; 2021.<a href="/">好啵的博客</a><br><br>
   </div>
 </footer>
 
@@ -204,6 +229,7 @@
 	});
 }());
 </script>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/local.search.js"></script>
 
 
 </body>

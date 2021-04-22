@@ -15,13 +15,13 @@
     theme: 'lx',
     version: '0.3.9',
     localsearch:{
-      "enable": false,
+      "enable": true,
       "trigger": "auto",
       "top_n_per_article": 1,
       "unescape": false,
       "preload": false
       },
-    path: 'null'
+    path: 'search.xml'
   };
 </script>
 
@@ -63,16 +63,37 @@
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
 <div class="single">
+<a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
 
 <div id="page">
-<div id="lx-aside" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
+<div id="lx-aside" style="background-image: url(/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
   <div class="overlay">
   <div class="page-title">
     <div class="avatar"><a href="/"><img src="/images/avatar.jpg"></a></div>
     <span>2020-08-22</span>
     <h2>lc奇奇怪怪的搜索（无营...</h2>
     
-    </div>
+    <div class="social-links">
+    <a href="https://github.com/haoboxuxu" target="_blank"><i class="fa fa-github fa-fw"></i></a>
+    <a href="https://weibo.com/haoboxuxu" target="_blank"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://twitter.com/haoboxuxu" target="_blank"><i class="fa fa-twitter fa-fw"></i></a>
+</div></div>
 </div>
 </div>
 
@@ -80,7 +101,11 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <h5 id="79-Word-Search"><a href="#79-Word-Search" class="headerlink" title="79. Word Search"></a>79. Word Search</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">exist</span><span class="params">(<span class="keyword">char</span>[][] board, String word)</span> </span>&#123;</span><br><span class="line">        n = board.length;</span><br><span class="line">        m = board[<span class="number">0</span>].length;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (board[i][j] == word.charAt(<span class="number">0</span>) &amp;&amp; bfs(i, j, <span class="number">0</span>, board, word)) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> index, <span class="keyword">char</span>[][] board, String word)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; <span class="number">0</span> || i &gt;= n || j &lt; <span class="number">0</span> || j &gt;= m || board[i][j] != word.charAt(index)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> index, <span class="keyword">char</span>[][] board, String word)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (index == word.length()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!check(i, j, index, board, word)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">char</span> temp = board[i][j];</span><br><span class="line">        board[i][j] = <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">        <span class="keyword">boolean</span> res = bfs(i-<span class="number">1</span>, j, index+<span class="number">1</span>, board, word) ||</span><br><span class="line">                      bfs(i+<span class="number">1</span>, j, index+<span class="number">1</span>, board, word) ||</span><br><span class="line">                      bfs(i, j+<span class="number">1</span>, index+<span class="number">1</span>, board, word) ||</span><br><span class="line">                      bfs(i, j-<span class="number">1</span>, index+<span class="number">1</span>, board, word);</span><br><span class="line">        board[i][j] = temp;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <hr>
+<p>lc的dfs和bfs合集</p>
+<span id="more"></span>
+
+<h5 id="79-Word-Search"><a href="#79-Word-Search" class="headerlink" title="79. Word Search"></a>79. Word Search</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">exist</span><span class="params">(<span class="keyword">char</span>[][] board, String word)</span> </span>&#123;</span><br><span class="line">        n = board.length;</span><br><span class="line">        m = board[<span class="number">0</span>].length;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (board[i][j] == word.charAt(<span class="number">0</span>) &amp;&amp; bfs(i, j, <span class="number">0</span>, board, word)) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> index, <span class="keyword">char</span>[][] board, String word)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; <span class="number">0</span> || i &gt;= n || j &lt; <span class="number">0</span> || j &gt;= m || board[i][j] != word.charAt(index)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> index, <span class="keyword">char</span>[][] board, String word)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (index == word.length()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!check(i, j, index, board, word)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">char</span> temp = board[i][j];</span><br><span class="line">        board[i][j] = <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">        <span class="keyword">boolean</span> res = bfs(i-<span class="number">1</span>, j, index+<span class="number">1</span>, board, word) ||</span><br><span class="line">                      bfs(i+<span class="number">1</span>, j, index+<span class="number">1</span>, board, word) ||</span><br><span class="line">                      bfs(i, j+<span class="number">1</span>, index+<span class="number">1</span>, board, word) ||</span><br><span class="line">                      bfs(i, j-<span class="number">1</span>, index+<span class="number">1</span>, board, word);</span><br><span class="line">        board[i][j] = temp;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h5 id="695-Max-Area-of-Island"><a href="#695-Max-Area-of-Island" class="headerlink" title="695. Max Area of Island"></a>695. Max Area of Island</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> area = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="keyword">int</span> m;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxAreaOfIsland</span><span class="params">(<span class="keyword">int</span>[][] grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (grid == <span class="keyword">null</span> || grid.length == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        n = grid.length;</span><br><span class="line">        m = grid[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">boolean</span>[][] vis = <span class="keyword">new</span> <span class="keyword">boolean</span>[n][m];</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (!vis[i][j] || grid[i][j] == <span class="number">1</span>) &#123;</span><br><span class="line">                    area = <span class="number">0</span>;</span><br><span class="line">                    dfs(i, j, grid, vis);</span><br><span class="line">                    res = Math.max(area, res);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span>[][] grid, <span class="keyword">boolean</span>[][] vis)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; <span class="number">0</span> || i &gt;= n || j &lt; <span class="number">0</span> || j &gt;= m || vis[i][j]) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span>[][] grid, <span class="keyword">boolean</span>[][] vis)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!check(i, j, grid, vis)) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (grid[i][j] == <span class="number">0</span>) &#123;</span><br><span class="line">            vis[i][j] = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        vis[i][j] = <span class="keyword">true</span>;</span><br><span class="line">        area += <span class="number">1</span>;</span><br><span class="line">        dfs(i+<span class="number">1</span>, j, grid, vis);</span><br><span class="line">        dfs(i-<span class="number">1</span>, j, grid, vis);</span><br><span class="line">        dfs(i, j+<span class="number">1</span>, grid, vis);</span><br><span class="line">        dfs(i, j-<span class="number">1</span>, grid, vis);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -92,7 +117,7 @@
   </div>
 </div>
 <div class="lx-navigation">
-	<div class="lx-cover prev lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-l.jpeg)">
+	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer-l.jpeg)">
 		<div class="overlay"></div>
 		<a class="copy" href="/2020/08/27/%E6%A0%91%E9%99%A4%E9%81%8D%E5%8E%86%E5%A4%96%E7%9A%84%E4%B8%80%E4%BA%9B%E9%AA%9A%EF%BC%88%E6%9C%80%E5%90%8E%E7%9A%84%F0%9F%90%9F%EF%BC%89/">
 			<div class="display-t">
@@ -105,14 +130,14 @@
 			</div>
 		</a>
 	</div>
-        <div class="lx-cover next lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-r.jpeg)">
+        <div class="lx-cover next lx-cover-sm" style="background-image: url(/images/footer-r.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="/2020/08/09/lc206-ReverseLinkedList%E4%B8%80%E4%BA%9B%E4%B9%B1%E4%B8%83%E5%85%AB%E7%B3%9F%E7%9A%84%E8%A7%A3%E6%B3%95/">
+		<a class="copy" href="/2020/08/18/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E4%BA%8C%E5%88%86%EF%BC%88%E6%97%A0%E8%90%A5%E5%85%BB%E6%91%B8%F0%9F%90%9F%E6%96%87%EF%BC%89/">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Prev</span>
-						<h3>lc206:R...</h3>
+						<h3>奇奇怪怪的二分...</h3>
 					</div>
 				</div>
 			</div>
@@ -121,10 +146,10 @@
 </div>
 
 </div>
-
+<div class="comment"><div id="comments"></div></div>
 <footer>
   <div>
-  Copyright &copy; 2021.<a href="/">好啵的博客</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  Copyright &copy; 2021.<a href="/">好啵的博客</a><br><br>
   </div>
 </footer>
 
@@ -202,6 +227,7 @@
 	});
 }());
 </script>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/local.search.js"></script>
 
 
 </body>

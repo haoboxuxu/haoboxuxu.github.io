@@ -15,13 +15,13 @@
     theme: 'lx',
     version: '0.3.9',
     localsearch:{
-      "enable": false,
+      "enable": true,
       "trigger": "auto",
       "top_n_per_article": 1,
       "unescape": false,
       "preload": false
       },
-    path: 'null'
+    path: 'search.xml'
   };
 </script>
 
@@ -63,16 +63,37 @@
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
 <div class="single">
+<a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
 
 <div id="page">
-<div id="lx-aside" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
+<div id="lx-aside" style="background-image: url(/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
   <div class="overlay">
   <div class="page-title">
     <div class="avatar"><a href="/"><img src="/images/avatar.jpg"></a></div>
     <span>2020-08-09</span>
     <h2>lc206:Revers...</h2>
     
-    </div>
+    <div class="social-links">
+    <a href="https://github.com/haoboxuxu" target="_blank"><i class="fa fa-github fa-fw"></i></a>
+    <a href="https://weibo.com/haoboxuxu" target="_blank"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://twitter.com/haoboxuxu" target="_blank"><i class="fa fa-twitter fa-fw"></i></a>
+</div></div>
 </div>
 </div>
 
@@ -80,7 +101,10 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <p><strong>Example:</strong></p>
+        <hr>
+<span id="more"></span>
+
+<p><strong>Example:</strong></p>
 <p>“<code> Input: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL Output: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL “</code></p>
 <p><strong>Follow up:</strong></p>
 <p>A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
@@ -92,20 +116,20 @@
   </div>
 </div>
 <div class="lx-navigation">
-	<div class="lx-cover prev lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-l.jpeg)">
+	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer-l.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="/2020/08/22/lc%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E6%90%9C%E7%B4%A2%EF%BC%88%E6%97%A0%E8%90%A5%E5%85%BB%E7%9A%84%F0%9F%90%9F%EF%BC%89/">
+		<a class="copy" href="/2020/08/18/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E4%BA%8C%E5%88%86%EF%BC%88%E6%97%A0%E8%90%A5%E5%85%BB%E6%91%B8%F0%9F%90%9F%E6%96%87%EF%BC%89/">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Next</span>
-						<h3>lc奇奇怪怪的...</h3>
+						<h3>奇奇怪怪的二分...</h3>
 					</div>
 				</div>
 			</div>
 		</a>
 	</div>
-        <div class="lx-cover next lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-r.jpeg)">
+        <div class="lx-cover next lx-cover-sm" style="background-image: url(/images/footer-r.jpeg)">
 		<div class="overlay"></div>
 		<a class="copy" href="/2020/05/07/%E6%A0%91%E7%9A%84%E5%90%84%E7%A7%8D%E9%81%8D%E5%8E%86/">
 			<div class="display-t">
@@ -121,10 +145,10 @@
 </div>
 
 </div>
-
+<div class="comment"><div id="comments"></div></div>
 <footer>
   <div>
-  Copyright &copy; 2021.<a href="/">好啵的博客</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  Copyright &copy; 2021.<a href="/">好啵的博客</a><br><br>
   </div>
 </footer>
 
@@ -202,6 +226,7 @@
 	});
 }());
 </script>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/local.search.js"></script>
 
 
 </body>

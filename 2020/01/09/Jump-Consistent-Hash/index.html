@@ -15,13 +15,13 @@
     theme: 'lx',
     version: '0.3.9',
     localsearch:{
-      "enable": false,
+      "enable": true,
       "trigger": "auto",
       "top_n_per_article": 1,
       "unescape": false,
       "preload": false
       },
-    path: 'null'
+    path: 'search.xml'
   };
 </script>
 
@@ -63,16 +63,37 @@
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
 <div class="single">
+<a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
 
 <div id="page">
-<div id="lx-aside" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
+<div id="lx-aside" style="background-image: url(/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
   <div class="overlay">
   <div class="page-title">
     <div class="avatar"><a href="/"><img src="/images/avatar.jpg"></a></div>
     <span>2020-01-09</span>
     <h2>Jump Consist...</h2>
     
-    </div>
+    <div class="social-links">
+    <a href="https://github.com/haoboxuxu" target="_blank"><i class="fa fa-github fa-fw"></i></a>
+    <a href="https://weibo.com/haoboxuxu" target="_blank"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://twitter.com/haoboxuxu" target="_blank"><i class="fa fa-twitter fa-fw"></i></a>
+</div></div>
 </div>
 </div>
 
@@ -80,7 +101,11 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <p>Consistent Hash就是为了解决负载均衡的问题，如下图，把不同资源的访问分配的不同的服务器缓解压力；算法就是解决服务器和文件的映射</p>
+        <hr>
+<p>大三一个课的小作业，做得小调研</p>
+<span id="more"></span>
+
+<p>Consistent Hash就是为了解决负载均衡的问题，如下图，把不同资源的访问分配的不同的服务器缓解压力；算法就是解决服务器和文件的映射</p>
 <p>谈到映射就想到hash；如果你打过acm，就不得不说下面的哈希方法。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ll long long</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> inf 1 &lt;&lt; 30</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> base 233</span></span><br><span class="line">ll mod = inf;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">myHash</span><span class="params">(<span class="keyword">char</span> s[])</span></span>&#123;</span><br><span class="line">    ll res = <span class="number">0</span>, len = <span class="built_in">strlen</span>(s);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)&#123;</span><br><span class="line">        res = (base * res + (ll)s[i]) % mod;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -106,7 +131,7 @@
   </div>
 </div>
 <div class="lx-navigation">
-	<div class="lx-cover prev lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-l.jpeg)">
+	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer-l.jpeg)">
 		<div class="overlay"></div>
 		<a class="copy" href="/2020/04/27/A-self-create-Algorithm-to-link-nodes-in-ARKit/">
 			<div class="display-t">
@@ -119,7 +144,7 @@
 			</div>
 		</a>
 	</div>
-        <div class="lx-cover next lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-r.jpeg)">
+        <div class="lx-cover next lx-cover-sm" style="background-image: url(/images/footer-r.jpeg)">
 		<div class="overlay"></div>
 		<a class="copy" href="/2019/10/09/%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95neural-networks/">
 			<div class="display-t">
@@ -135,10 +160,10 @@
 </div>
 
 </div>
-
+<div class="comment"><div id="comments"></div></div>
 <footer>
   <div>
-  Copyright &copy; 2021.<a href="/">好啵的博客</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  Copyright &copy; 2021.<a href="/">好啵的博客</a><br><br>
   </div>
 </footer>
 
@@ -216,6 +241,7 @@
 	});
 }());
 </script>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/local.search.js"></script>
 
 
 </body>
