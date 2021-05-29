@@ -104,7 +104,7 @@
         <hr>
 <span id="more"></span>
 
-<h3 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a>常用参数</h3><h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>目录结构如下</p>
+<h2 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a>常用参数</h2><h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>目录结构如下</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">❯ tree</span><br><span class="line">.</span><br><span class="line">├── include</span><br><span class="line">│   └── func.h</span><br><span class="line">├── main.cpp</span><br><span class="line">└── src</span><br><span class="line">    └── func.cpp</span><br><span class="line"></span><br><span class="line">2 directories, 3 files</span><br></pre></td></tr></table></figure>
 
 <p>main.cpp</p>
@@ -119,13 +119,21 @@
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">❯ g++ main.cpp src/func.cpp -Iinclude -o a.out</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ main.cpp src/func.cpp -Iinclude -Wall -std=c++11 -o b.out</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">❯ g++ main.cpp src/func.cpp -Iinclude -Wall -std=c++11 -o b.out</span><br></pre></td></tr></table></figure>
 
 <p>生成func的静态库</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">❯ <span class="built_in">cd</span> src</span><br><span class="line"><span class="comment"># 汇编生成func.o</span></span><br><span class="line">❯ g++ func.cpp -c -I../include</span><br><span class="line"><span class="comment"># 生成静态链接库libFunc.a</span></span><br><span class="line">❯ ar rs libFunc.a func.o</span><br><span class="line">ar: creating archive libFunc.a</span><br><span class="line"><span class="comment"># 使用静态库g编译生成static.out</span></span><br><span class="line">❯ <span class="built_in">cd</span> ..</span><br><span class="line">❯ g++ main.cpp -lfunc -Lsrc -Iinclude -o static.out</span><br></pre></td></tr></table></figure>
 
 <p>生成func的动态库</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">❯ <span class="built_in">cd</span> src</span><br><span class="line"><span class="comment"># 生成动态库libfunc.so</span></span><br><span class="line">❯ g++ func.cpp -I../include -fPIC -shared -o libfunc.so</span><br><span class="line"><span class="comment"># 使用动态库g编译生成dynamic.out</span></span><br><span class="line">g++ main.cpp -Iinclude -lfunc -Lsrc -o dynamic</span><br><span class="line"><span class="comment"># 运行dynamic</span></span><br><span class="line">DYLD_LIBRARY_PATH=src ./dynamic <span class="comment"># for MacOS</span></span><br><span class="line">LD_LIBRARY_PATH=src ./dynamic   <span class="comment"># for Linux</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="GDB调试"><a href="#GDB调试" class="headerlink" title="GDB调试"></a>GDB调试</h2><p>代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="number">100</span>;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (i &lt;= n) &#123;</span><br><span class="line">		sum += i;</span><br><span class="line">		i += <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	std::cout &lt;&lt; <span class="string">&quot;sum = &quot;</span> &lt;&lt; sum &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">❯ g++ -g gdbMain.cpp -o gdbMain</span><br><span class="line">❯ gdb gdbMain</span><br></pre></td></tr></table></figure>
+
+
       </div>
     </div>
   </div>
@@ -133,12 +141,12 @@
 <div class="lx-navigation">
 	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer-l.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="#">
+		<a class="copy" href="/2021/05/10/%E5%85%B3%E4%BA%8E%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA-%E4%B8%8B%E4%B8%80%E5%91%A8%E7%9A%84%E7%90%83%E4%BD%93uv%E5%9D%90%E6%A0%87/">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Next</span>
-						<h3>No newer post</h3>
+						<h3>关于光线追踪:...</h3>
 					</div>
 				</div>
 			</div>
