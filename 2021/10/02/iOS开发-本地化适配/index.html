@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content=#58b77a>
-  <title>好啵的博客</title>
+  <title>iOS开发:本地化适配 | 好啵的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="haoboxuxu">
   <meta name="keywords" content="">
@@ -62,7 +62,7 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
-<div id="page">
+<div class="single">
 <a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
 <div class="popup search-popup local-search-popup">
   <div class="local-search-header clearfix">
@@ -81,113 +81,76 @@
   <div id="local-search-result"></div>
 </div>
 
-<div id="lx-aside" style="background-image: url(/images/cover.jpeg)">
+<div id="page">
+<div id="lx-aside" style="background-image: url(/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
   <div class="overlay">
-  <div class="featured">
+  <div class="page-title">
     <div class="avatar"><a href="/"><img src="/images/avatar.jpg"></a></div>
-    <span>haoboxuxu</span>
-    <h1>好啵的博客</h1>
+    <span>2021-10-02</span>
+    <h2>iOS开发:本地化适配</h2>
     
     <div class="social-links">
     <a href="https://github.com/haoboxuxu" target="_blank"><i class="fa fa-github fa-fw"></i></a>
     <a href="https://weibo.com/haoboxuxu" target="_blank"><i class="fa fa-weibo fa-fw"></i></a>
     <a href="https://twitter.com/haoboxuxu" target="_blank"><i class="fa fa-twitter fa-fw"></i></a>
+</div></div>
 </div>
-  </div>
-  </div>
 </div>
 
 <div id="lx-main-content">
   <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <hr>
+<p>关于iOS开发中本地化适配技巧</p>
+<span id="more"></span>
+<p>一般先在project-&gt;info页面配置需要本地化的语言</p>
+<img src="/2021/10/02/iOS%E5%BC%80%E5%8F%91-%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D/iOS%E5%BC%80%E5%8F%91_%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D_1.jpg" class="" title="iOS开发_本地化适配_1">
 
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2020/05/07/%E6%A0%91%E7%9A%84%E5%90%84%E7%A7%8D%E9%81%8D%E5%8E%86/">树的各种遍历</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2020-05-07</span>
-      <p><hr></p>
-      <div class="post-button"><a class="btn" href="/2020/05/07/%E6%A0%91%E7%9A%84%E5%90%84%E7%A7%8D%E9%81%8D%E5%8E%86/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+<p>然后会弹窗需要适配的storyboard，点选是之后会出现和storyboard同名的.stringts文件，以ObjectID为key逐个适配text文本，但是这种方式在xcode不能做到随改随更新，brew install bartycrouch这个插件可以搞定。</p>
+<p>其他代码中文本的适配可以创建Localizable.strings文件（名字不能错）</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在需要文本的代码写上</span></span><br><span class="line"><span class="type">NSLocalizedString</span>(<span class="string">&quot;Home&quot;</span>, comment: <span class="string">&quot;comment是注释而已&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Localizable文件写本地化翻译，这个文件右边配置面板可勾选语言</span></span><br><span class="line"><span class="string">&quot;Home&quot;</span> <span class="operator">=</span> <span class="string">&quot;主页&quot;</span>;</span><br></pre></td></tr></table></figure>
+      </div>
     </div>
   </div>
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2020/04/27/A-self-create-Algorithm-to-link-nodes-in-ARKit/">A self create Algorithm to link nodes in ARKit</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2020-04-27</span>
-      <p><hr>
-<p>这是我瞎发明的SCNCylinder链接ARkit或者Scenekit中两个节点的小算法，因为SCNCylinder不能设置起始位置和结束位置，只能通过三角函数自己旋转，下面代码需要的直接CV就好了</p></p>
-      <div class="post-button"><a class="btn" href="/2020/04/27/A-self-create-Algorithm-to-link-nodes-in-ARKit/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
-    </div>
-  </div>
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2020/01/09/Jump-Consistent-Hash/">Jump Consistent Hash</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2020-01-09</span>
-      <p><hr>
-<p>大三一个课的小作业，做得小调研</p></p>
-      <div class="post-button"><a class="btn" href="/2020/01/09/Jump-Consistent-Hash/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
-    </div>
-  </div>
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2019/10/09/%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95neural-networks/">实现一个简单neural networks</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2019-10-09</span>
-      <p><hr></p>
-      <div class="post-button"><a class="btn" href="/2019/10/09/%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95neural-networks/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
-    </div>
-  </div>
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2019/05/26/%E5%8A%9B%E6%89%A334/">力扣34</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2019-05-26</span>
-      <p><hr></p>
-      <div class="post-button"><a class="btn" href="/2019/05/26/%E5%8A%9B%E6%89%A334/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
-    </div>
-  </div>
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2019/04/25/%E5%8A%9B%E6%89%A323/">力扣23</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2019-04-25</span>
-      <p><hr></p>
-      <div class="post-button"><a class="btn" href="/2019/04/25/%E5%8A%9B%E6%89%A323/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
-    </div>
-  </div>
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2019/04/19/Definition-for-singly-linked-list/">Definition for singly-linked list</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2019-04-19</span>
-      <p><hr></p>
-      <div class="post-button"><a class="btn" href="/2019/04/19/Definition-for-singly-linked-list/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
-    </div>
-  </div>
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2019/03/13/%E5%89%8D%E5%BA%8F-%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E8%BF%98%E5%8E%9F%E4%BA%8C%E5%8F%89%E6%A0%91/">前序/中序遍历还原二叉树</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2019-03-13</span>
-      <p><hr></p>
-      <div class="post-button"><a class="btn" href="/2019/03/13/%E5%89%8D%E5%BA%8F-%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E8%BF%98%E5%8E%9F%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
-    </div>
-  </div>
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2019/03/12/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%EF%BC%8801%E5%AE%8C%E5%85%A8%E5%A4%9A%E9%87%8D%EF%BC%89/">背包问题（01完全多重）</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2019-03-12</span>
-      <p><hr></p>
-      <div class="post-button"><a class="btn" href="/2019/03/12/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%EF%BC%8801%E5%AE%8C%E5%85%A8%E5%A4%9A%E9%87%8D%EF%BC%89/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
-    </div>
-  </div>
-
-
-<div id="pagination">
-  <a class="extend prev" rel="prev" href="/"></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer-l.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="#">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>No newer post</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover next lx-cover-sm" style="background-image: url(/images/footer-r.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2021/05/29/Elliptical-Grid-Mapping/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>Ellipti...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
 </div>
 
+</div>
+<div class="comment"><div id="comments"></div></div>
 <footer>
   <div>
   Copyright &copy; 2021.<a href="/">好啵的博客</a><br><br>
   </div>
 </footer>
 
-  </div>
-</div>
 </div>
 
 <button class="hamburger hamburger--arrow-r" type="button">
