@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>Jump Consistent Hash | 好啵的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="haoboxuxu">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.3.9',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/css/main.min.css">
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.jside.menu.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "greenish",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+<div class="single">
+<a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div id="lx-aside" style="background-image: url(/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
+  <div class="overlay">
+  <div class="page-title">
+    <div class="avatar"><a href="/"><img src="/images/avatar.jpg"></a></div>
+    <span>2020-01-09</span>
+    <h2>Jump Consist...</h2>
+    
+    <div class="social-links">
+    <a href="https://github.com/haoboxuxu" target="_blank"><i class="fa fa-github fa-fw"></i></a>
+    <a href="https://weibo.com/haoboxuxu" target="_blank"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://twitter.com/haoboxuxu" target="_blank"><i class="fa fa-twitter fa-fw"></i></a>
+</div></div>
+</div>
+</div>
+
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <hr>
+<p>大三一个课的小作业，做得小调研</p>
+<span id="more"></span>
+
+<p>Consistent Hash就是为了解决负载均衡的问题，如下图，把不同资源的访问分配的不同的服务器缓解压力；算法就是解决服务器和文件的映射</p>
+<p>谈到映射就想到hash；如果你打过acm，就不得不说下面的哈希方法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ll long long</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> inf 1 &lt;&lt; 30</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> base 233</span></span><br><span class="line">ll mod = inf;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">myHash</span><span class="params">(<span class="keyword">char</span> s[])</span></span>&#123;</span><br><span class="line">    ll res = <span class="number">0</span>, len = <span class="built_in">strlen</span>(s);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)&#123;</span><br><span class="line">        res = (base * res + (ll)s[i]) % mod;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>存在很大的问题就是服务器数量相当于mod，数量有改变mod改变，整个hash就乱套了，于是乎有了Consistent Hash，这里不详细解释，这里讲的是Google的Jump Consistent Hash，8行代码，短小精悍。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int32_t</span> <span class="title">JumpConsistentHash</span><span class="params">(<span class="keyword">uint64_t</span> key, <span class="keyword">int32_t</span> num_buckets)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">int64_t</span> b = <span class="number">-1</span>, j = <span class="number">0</span>;  </span><br><span class="line">    <span class="keyword">while</span> (j &lt; num_buckets) &#123;  </span><br><span class="line">        b = j;  </span><br><span class="line">        key = key * <span class="number">2862933555777941757ULL</span> + <span class="number">1</span>;  </span><br><span class="line">        j = (b + <span class="number">1</span>) * (<span class="built_in"><span class="keyword">double</span></span>(<span class="number">1LL</span> &lt;&lt; <span class="number">31</span>) / <span class="built_in"><span class="keyword">double</span></span>((key &gt;&gt; <span class="number">33</span>) + <span class="number">1</span>));  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> b;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这么一看你肯定是懵逼了，我一步步来解释。<br>这里先令f(key, n)为一致性哈希算法,输出的为[0,n)之间的数字，代表数据在对应的节点上。</p>
+<p>1.n=1时，对于任意的key，输出应该都是0。（比如你有1个服务器，那么就是无论如何都是分配到这个服务器上）<br>2.n=2时，负载均衡，应该有1/2的结果保持为0，1/2的结果输出为1。<br>3.n=3时，负载均衡，应该有1/3的结果保持为0，1/3的结果保持为1，1/3的结果保持为2。<br>4.依次递推，节点数由n变为n+1时，f(key, n)里面应该有n/(n+1)的结果不变。<br>结论：<br><strong>有1/(n+1)的结果变为n</strong></p>
+<p>如下图，有个重要的规律，在某条不跳变的路径上，数值是一样的。</p>
+<p>这个使用概率公式来表示，就是这样的代码，于是我们可以得到下面这个<strong>ch</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ch</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> num_buckets)</span> </span>&#123;  </span><br><span class="line">    random.<span class="built_in">seed</span>(key) ;  </span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">0</span>; <span class="comment">// This will track ch(key, j +1) .  </span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; num_buckets; j ++) &#123;  </span><br><span class="line">        <span class="keyword">if</span> (random.<span class="built_in">next</span>() &lt; <span class="number">1.0</span>/(j+<span class="number">1</span>) ) b = j ;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> b;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>增加一个节点后，一个固定的key输出的结果发生了改变。快速计算出这个固定的key在哪些节点下发生了改变，就可以快速计算出最终答案，就是Jump Consistent Hash的思路。<br>假设某一次结果是b，经过若干次概率测试，下一次改变为a，则从b到a-1这中间，不管节点如何变化，这个key的结果都是不会变化的。<br>根据上一小节的到的概率变化公式，新增一个节点数字不变化的概率是n/(n+1)。<br>那从b到i不变化的概率就是b/i（中间的抵消了）<br>设有随机函数r，当r小于b/i时，f(i)=f(b)。那么i的上界就是(b+1)/r。<br>这个上限也是下一次key发生变化的节点数量，由此可以得出下面的代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ch</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> num_buckets)</span> </span>&#123;  </span><br><span class="line">    random. <span class="built_in">seed</span>(key) ;  </span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">-1</span>; <span class="comment">//  bucket number before the previous jump  </span></span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>; <span class="comment">// bucket number before the current jump  </span></span><br><span class="line">    <span class="keyword">while</span>(j&lt;num_buckets)&#123;  </span><br><span class="line">        b=j;  </span><br><span class="line">        <span class="keyword">double</span> r=random.<span class="built_in">next</span>(); <span class="comment">//  0&lt;r&lt;1.0  </span></span><br><span class="line">        j = <span class="built_in">floor</span>( (b+<span class="number">1</span>) /r);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> b;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于r是均匀的，所以期望是1/2。<br>这样，代码中j就是按照指数级增长的，平均复杂度就是O(log(n))了。</p>
+<p>回头看看第一个代码，就可以看懂代码了。</p>
+<p>第一个key=key*x+1算是一个伪随机生成器。<br>而j=(b+1)*x/y则是上面的求上界的公式，其中y/x通过浮点数运算来产生(0,1)内的一个随机数。</p>
+<p>我们可以发现一开始的代码是没有random. seed的，因为用了线性同余</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer-l.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2020/04/27/A-self-create-Algorithm-to-link-nodes-in-ARKit/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>A self ...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover next lx-cover-sm" style="background-image: url(/images/footer-r.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2019/10/09/%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95neural-networks/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>实现一个简单n...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2021.<a href="/">好啵的博客</a><br><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button> 
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="/images/avatar.jpg" alt="haoboxuxu"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>haoboxuxu</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/local.search.js"></script>
+
+
+</body>
+</html>
