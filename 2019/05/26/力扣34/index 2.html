@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content=#58b77a>
-  <title>我的博客好像坏了 | 好啵的博客</title>
+  <title>力扣34 | 好啵的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="haoboxuxu">
   <meta name="keywords" content="">
@@ -86,8 +86,8 @@
   <div class="overlay">
   <div class="page-title">
     <div class="avatar"><a href="/"><img src="/images/avatar.jpg"></a></div>
-    <span>2021-10-04</span>
-    <h2>我的博客好像坏了</h2>
+    <span>2019-05-26</span>
+    <h2>力扣34</h2>
     
     <div class="social-links">
     <a href="https://github.com/haoboxuxu" target="_blank"><i class="fa fa-github fa-fw"></i></a>
@@ -101,7 +101,12 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <p>呜呜呜</p>
+        <hr>
+<span id="more"></span>
+
+<h1 id="力扣34"><a href="#力扣34" class="headerlink" title="力扣34"></a>力扣34</h1><p>二分的很好的应用。<br>(i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).<br>可以看到二分的前半段可能是两次或一次递增<br>如果target &gt; nums[start] 并且 target &lt; nums[mid]，那么target在前半部分。 后半部分同理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> start = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> end = nums.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(start + <span class="number">1</span>&lt; end) &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = (end - start)/<span class="number">2</span> + start;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid] == target) <span class="keyword">return</span> mid;</span><br><span class="line">            <span class="keyword">if</span>(nums[start] &lt; nums[mid]) &#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[start] &lt;= target &amp;&amp; target &lt;= nums[mid]) &#123;</span><br><span class="line">                    end = mid;</span><br><span class="line">                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                    start = mid;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[mid] &lt;= target &amp;&amp; target &lt;= nums[end]) &#123;</span><br><span class="line">                    start = mid;</span><br><span class="line">                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                    end = mid;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(nums[start] == target) &#123;</span><br><span class="line">            <span class="keyword">return</span> start;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[end] == target) &#123;</span><br><span class="line">            <span class="keyword">return</span> end;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       </div>
     </div>
@@ -110,12 +115,12 @@
 <div class="lx-navigation">
 	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer-l.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="/2021/10/05/iOS%E5%BC%80%E5%8F%91-Swift%E6%B7%B7%E7%BC%96%E6%A1%A5%E6%8E%A5OC/">
+		<a class="copy" href="/2019/10/09/%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95neural-networks/">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Next</span>
-						<h3>iOS开发:S...</h3>
+						<h3>实现一个简单n...</h3>
 					</div>
 				</div>
 			</div>
@@ -123,12 +128,12 @@
 	</div>
         <div class="lx-cover next lx-cover-sm" style="background-image: url(/images/footer-r.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="/2021/10/02/iOS%E5%BC%80%E5%8F%91-%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D/">
+		<a class="copy" href="/2019/04/25/%E5%8A%9B%E6%89%A323/">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Prev</span>
-						<h3>iOS开发:本...</h3>
+						<h3>力扣23</h3>
 					</div>
 				</div>
 			</div>

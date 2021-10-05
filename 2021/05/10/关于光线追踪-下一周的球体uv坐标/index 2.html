@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content=#58b77a>
-  <title>我的博客好像坏了 | 好啵的博客</title>
+  <title>关于光线追踪:下一周的球体uv坐标 | 好啵的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="haoboxuxu">
   <meta name="keywords" content="">
@@ -86,8 +86,8 @@
   <div class="overlay">
   <div class="page-title">
     <div class="avatar"><a href="/"><img src="/images/avatar.jpg"></a></div>
-    <span>2021-10-04</span>
-    <h2>我的博客好像坏了</h2>
+    <span>2021-05-10</span>
+    <h2>关于光线追踪:下一周的球...</h2>
     
     <div class="social-links">
     <a href="https://github.com/haoboxuxu" target="_blank"><i class="fa fa-github fa-fw"></i></a>
@@ -101,7 +101,14 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <p>呜呜呜</p>
+        <hr>
+<p>文章更新中</p>
+<span id="more"></span>
+
+<p>就是文中这段代码的三角函数部分</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getSphereUV</span><span class="params">(<span class="keyword">const</span> point3&amp; p, <span class="keyword">double</span>&amp; u, <span class="keyword">double</span>&amp; v)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// p: a given point on the sphere of radius one, centered at the origin.</span></span><br><span class="line">    <span class="comment">// u: returned value [0,1] of angle around the Y axis from X=-1.</span></span><br><span class="line">    <span class="comment">// v: returned value [0,1] of angle from Y=-1 to Y=+1.</span></span><br><span class="line">    <span class="comment">//     &lt;1 0 0&gt; yields &lt;0.50 0.50&gt;       &lt;-1  0  0&gt; yields &lt;0.00 0.50&gt;</span></span><br><span class="line">    <span class="comment">//     &lt;0 1 0&gt; yields &lt;0.50 1.00&gt;       &lt; 0 -1  0&gt; yields &lt;0.50 0.00&gt;</span></span><br><span class="line">    <span class="comment">//     &lt;0 0 1&gt; yields &lt;0.25 0.50&gt;       &lt; 0  0 -1&gt; yields &lt;0.75 0.50&gt;</span></span><br><span class="line">    <span class="keyword">auto</span> theta = <span class="built_in">acos</span>(-p.<span class="built_in">y</span>());</span><br><span class="line">    <span class="keyword">auto</span> phi = <span class="built_in">atan2</span>(-p.<span class="built_in">z</span>(), p.<span class="built_in">x</span>()) + pi;</span><br><span class="line"></span><br><span class="line">    u = phi / (<span class="number">2</span>*pi);</span><br><span class="line">    v = theta / pi;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第四章没有配图，一开始我也没看懂uv坐标，自己画画图就好了</p>
 
       </div>
     </div>
@@ -110,12 +117,12 @@
 <div class="lx-navigation">
 	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer-l.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="/2021/10/05/iOS%E5%BC%80%E5%8F%91-Swift%E6%B7%B7%E7%BC%96%E6%A1%A5%E6%8E%A5OC/">
+		<a class="copy" href="/2021/05/29/Elliptical-Grid-Mapping/">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Next</span>
-						<h3>iOS开发:S...</h3>
+						<h3>Ellipti...</h3>
 					</div>
 				</div>
 			</div>
@@ -123,12 +130,12 @@
 	</div>
         <div class="lx-cover next lx-cover-sm" style="background-image: url(/images/footer-r.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="/2021/10/02/iOS%E5%BC%80%E5%8F%91-%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D/">
+		<a class="copy" href="/2021/05/06/gcc-g-%E5%B0%8F%E5%85%A5%E9%97%A8/">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Prev</span>
-						<h3>iOS开发:本...</h3>
+						<h3>gcc/g++...</h3>
 					</div>
 				</div>
 			</div>

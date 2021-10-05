@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content=#58b77a>
-  <title>我的博客好像坏了 | 好啵的博客</title>
+  <title>iOS开发:本地化适配 | 好啵的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="haoboxuxu">
   <meta name="keywords" content="">
@@ -86,8 +86,8 @@
   <div class="overlay">
   <div class="page-title">
     <div class="avatar"><a href="/"><img src="/images/avatar.jpg"></a></div>
-    <span>2021-10-04</span>
-    <h2>我的博客好像坏了</h2>
+    <span>2021-10-02</span>
+    <h2>iOS开发:本地化适配</h2>
     
     <div class="social-links">
     <a href="https://github.com/haoboxuxu" target="_blank"><i class="fa fa-github fa-fw"></i></a>
@@ -101,8 +101,15 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <p>呜呜呜</p>
+        <hr>
+<p>关于iOS开发中本地化适配技巧</p>
+<span id="more"></span>
+<p>一般先在project-&gt;info页面配置需要本地化的语言</p>
+<img src="/2021/10/02/iOS%E5%BC%80%E5%8F%91-%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D/iOS%E5%BC%80%E5%8F%91_%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D_1.jpg" class="" title="iOS开发_本地化适配_1">
 
+<p>然后会弹窗需要适配的storyboard，点选是之后会出现和storyboard同名的.stringts文件，以ObjectID为key逐个适配text文本，但是这种方式在xcode不能做到随改随更新，brew install bartycrouch这个插件可以搞定。</p>
+<p>其他代码中文本的适配可以创建Localizable.strings文件（名字不能错）</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在需要文本的代码写上</span></span><br><span class="line"><span class="type">NSLocalizedString</span>(<span class="string">&quot;Home&quot;</span>, comment: <span class="string">&quot;comment是注释而已&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Localizable文件写本地化翻译，这个文件右边配置面板可勾选语言</span></span><br><span class="line"><span class="string">&quot;Home&quot;</span> <span class="operator">=</span> <span class="string">&quot;主页&quot;</span>;</span><br></pre></td></tr></table></figure>
       </div>
     </div>
   </div>
@@ -110,12 +117,12 @@
 <div class="lx-navigation">
 	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer-l.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="/2021/10/05/iOS%E5%BC%80%E5%8F%91-Swift%E6%B7%B7%E7%BC%96%E6%A1%A5%E6%8E%A5OC/">
+		<a class="copy" href="#">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Next</span>
-						<h3>iOS开发:S...</h3>
+						<h3>No newer post</h3>
 					</div>
 				</div>
 			</div>
@@ -123,12 +130,12 @@
 	</div>
         <div class="lx-cover next lx-cover-sm" style="background-image: url(/images/footer-r.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="/2021/10/02/iOS%E5%BC%80%E5%8F%91-%E6%9C%AC%E5%9C%B0%E5%8C%96%E9%80%82%E9%85%8D/">
+		<a class="copy" href="/2021/05/29/Elliptical-Grid-Mapping/">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Prev</span>
-						<h3>iOS开发:本...</h3>
+						<h3>Ellipti...</h3>
 					</div>
 				</div>
 			</div>
