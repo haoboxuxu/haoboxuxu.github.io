@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content=#58b77a>
-  <title>iOS开发:Apple Silicon下Xcode编译arm64错误 | 好啵的博客</title>
+  <title>iOS开发:Cocoapods创建到发包 | 好啵的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="haoboxuxu">
   <meta name="keywords" content="">
@@ -86,8 +86,8 @@
   <div class="overlay">
   <div class="page-title">
     <div class="avatar"><a href="/"><img src="/images/avatar.jpg"></a></div>
-    <span>2021-10-21</span>
-    <h2>iOS开发:Apple ...</h2>
+    <span>2021-12-08</span>
+    <h2>iOS开发:Cocoap...</h2>
     
     <div class="social-links">
     <a href="https://github.com/haoboxuxu" target="_blank"><i class="fa fa-github fa-fw"></i></a>
@@ -102,18 +102,33 @@
     <div class="lx-entry padding">
       <div>
         <hr>
-<p>关于iOS开发Apple Silicon下Xcode编译arm64错误</p>
+<p>iOS framework开发Cocoapods创建到发包</p>
 <span id="more"></span>
 
-<p>pod一些第三方包可能有如下包指定x86，arm64编译错误</p>
-<img src="/2021/10/21/iOS%E5%BC%80%E5%8F%91-Apple-Silicon%E4%B8%8BXcode%E7%BC%96%E8%AF%91arm64%E9%94%99%E8%AF%AF/iOS%E5%BC%80%E5%8F%91-Apple-Silicon%E4%B8%8BXcode%E7%BC%96%E8%AF%91arm64%E9%94%99%E8%AF%AF_2.jpg" class="" title="iOS开发-Apple-Silicon下Xcode编译arm64错误_2">
-<p>最简单方式xcode直接开rosetta2（未评估成功率，但编译效率会下降）</p>
-<img src="/2021/10/21/iOS%E5%BC%80%E5%8F%91-Apple-Silicon%E4%B8%8BXcode%E7%BC%96%E8%AF%91arm64%E9%94%99%E8%AF%AF/iOS%E5%BC%80%E5%8F%91-Apple-Silicon%E4%B8%8BXcode%E7%BC%96%E8%AF%91arm64%E9%94%99%E8%AF%AF_1.jpg" class="" title="iOS开发-Apple-Silicon下Xcode编译arm64错误_1">
-<p>或者<br>1.在build setting搜excluded architectures，里面添加arm64</p>
-<img src="/2021/10/21/iOS%E5%BC%80%E5%8F%91-Apple-Silicon%E4%B8%8BXcode%E7%BC%96%E8%AF%91arm64%E9%94%99%E8%AF%AF/iOS%E5%BC%80%E5%8F%91-Apple-Silicon%E4%B8%8BXcode%E7%BC%96%E8%AF%91arm64%E9%94%99%E8%AF%AF_2.jpg" class="" title="iOS开发-Apple-Silicon下Xcode编译arm64错误_2">
-<p>2.podfile最后追增</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">post_install <span class="keyword">do</span> |installer|</span><br><span class="line">  installer.pods_project.build_configurations.each <span class="keyword">do</span> |config|</span><br><span class="line">    config.build_settings[<span class="string">&quot;EXCLUDED_ARCHS[sdk=iphonesimulator*]&quot;</span>] = <span class="string">&quot;arm64&quot;</span></span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<p>3.重新pod install</p>
+<h5 id="1-pod模板创建"><a href="#1-pod模板创建" class="headerlink" title="1. pod模板创建"></a>1. pod模板创建</h5><p>也可以选择自己用xcode工程创建，但是之后得自己配置podspec，这里选择用官方模板pod lib create xxx</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod lib create HBGradientBlur</span><br><span class="line">pod lib默认是拉下iOS9.0的版本，swift版本应该是4没到5，我一般是手动改下新版，pod和demo的target那里都要改</span><br></pre></td></tr></table></figure>
+<img src="/2021/12/08/iOS%E5%BC%80%E5%8F%91-Cocoapods%E5%88%9B%E5%BB%BA%E5%88%B0%E5%8F%91%E5%8C%85/iOS%E5%BC%80%E5%8F%91-Cocoapods%E5%88%9B%E5%BB%BA%E5%88%B0%E5%8F%91%E5%8C%85_1.jpg" class="" title="iOS开发-Cocoapods创建到发包_1">
+
+<h5 id="2-开发"><a href="#2-开发" class="headerlink" title="2. 开发"></a>2. 开发</h5><p>创建文件到ReplaceMe.swift同级，这里相当分包开发，之后要抛给app使用的话得写public</p>
+<img src="/2021/12/08/iOS%E5%BC%80%E5%8F%91-Cocoapods%E5%88%9B%E5%BB%BA%E5%88%B0%E5%8F%91%E5%8C%85/iOS%E5%BC%80%E5%8F%91-Cocoapods%E5%88%9B%E5%BB%BA%E5%88%B0%E5%8F%91%E5%8C%85_2.jpg" class="" title="iOS开发-Cocoapods创建到发包_2">
+<p>然后是验证.podspec<br>模版一般需要补全这几个部分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">s.summary          &#x3D; &#39;A GradientBlur UIView to build blur back ground like apple music.&#39;</span><br><span class="line">s.description      &#x3D; &lt;&lt;-DESC</span><br><span class="line">A GradientBlur UIView to build blur back ground like apple music. It cuts an UIImage to several ciimage to build gradient color.</span><br><span class="line">                    DESC</span><br><span class="line">s.swift_version &#x3D; &#39;5.0&#39;</span><br><span class="line">s.ios.deployment_target &#x3D; &#39;14.0&#39;</span><br></pre></td></tr></table></figure>
+<p>然后是pod lib lint HBGradientBlur.podspec，能验过就好</p>
+<img src="/2021/12/08/iOS%E5%BC%80%E5%8F%91-Cocoapods%E5%88%9B%E5%BB%BA%E5%88%B0%E5%8F%91%E5%8C%85/iOS%E5%BC%80%E5%8F%91-Cocoapods%E5%88%9B%E5%BB%BA%E5%88%B0%E5%8F%91%E5%8C%85_3.jpg" class="" title="iOS开发-Cocoapods创建到发包_3">
+
+<h5 id="3-push到托管平台"><a href="#3-push到托管平台" class="headerlink" title="3. push到托管平台"></a>3. push到托管平台</h5><p>这里可以直接挂个tag上传，但是我一般是在github自己创建tag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &quot;first commit&quot;</span><br><span class="line">git branch -M main</span><br><span class="line">git remote add origin https:&#x2F;&#x2F;github.com&#x2F;xxx&#x2F;xxx.git</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+<p>然后创建下tag，到时候pod会从github按tag拉，这里tag要和podspec同步版本号</p>
+<img src="/2021/12/08/iOS%E5%BC%80%E5%8F%91-Cocoapods%E5%88%9B%E5%BB%BA%E5%88%B0%E5%8F%91%E5%8C%85/iOS%E5%BC%80%E5%8F%91-Cocoapods%E5%88%9B%E5%BB%BA%E5%88%B0%E5%8F%91%E5%8C%85_4.jpg" class="" title="iOS开发-Cocoapods创建到发包_4">
+
+<h5 id="3-发布"><a href="#3-发布" class="headerlink" title="3. 发布"></a>3. 发布</h5><p>如果没注册过需要在终端注册下，需要邮箱验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod trunk register haoboxuxu@icloud.com &#39;haoboxuxu&#39;</span><br><span class="line">pod trunk me</span><br></pre></td></tr></table></figure>
+<p>然后trunk push发布到pod平台，它会需要一些时间去验证，大概15分钟吧，然后就可以pod到自己的app里了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk push HBGradientBlur.podspec</span><br></pre></td></tr></table></figure>
+<p>这里m1芯好像是ruby问题要rosette下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arch -x86_64 pod trunk push HBGradientBlur.podspec</span><br></pre></td></tr></table></figure>
+<p>看到成功消息就好了</p>
+<img src="/2021/12/08/iOS%E5%BC%80%E5%8F%91-Cocoapods%E5%88%9B%E5%BB%BA%E5%88%B0%E5%8F%91%E5%8C%85/iOS%E5%BC%80%E5%8F%91-Cocoapods%E5%88%9B%E5%BB%BA%E5%88%B0%E5%8F%91%E5%8C%85_5.jpg" class="" title="iOS开发-Cocoapods创建到发包_5">
 
       </div>
     </div>
@@ -122,12 +137,12 @@
 <div class="lx-navigation">
 	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer-l.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="/2021/12/08/iOS%E5%BC%80%E5%8F%91-Cocoapods%E5%88%9B%E5%BB%BA%E5%88%B0%E5%8F%91%E5%8C%85/">
+		<a class="copy" href="#">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Next</span>
-						<h3>iOS开发:C...</h3>
+						<h3>No newer post</h3>
 					</div>
 				</div>
 			</div>
@@ -135,12 +150,12 @@
 	</div>
         <div class="lx-cover next lx-cover-sm" style="background-image: url(/images/footer-r.jpeg)">
 		<div class="overlay"></div>
-		<a class="copy" href="/2021/10/05/iOS%E5%BC%80%E5%8F%91-Swift%E6%B7%B7%E7%BC%96%E6%A1%A5%E6%8E%A5OC/">
+		<a class="copy" href="/2021/10/21/iOS%E5%BC%80%E5%8F%91-Apple-Silicon%E4%B8%8BXcode%E7%BC%96%E8%AF%91arm64%E9%94%99%E8%AF%AF/">
 			<div class="display-t">
 				<div class="display-tc">
 					<div>
 						<span>Prev</span>
-						<h3>iOS开发:S...</h3>
+						<h3>iOS开发:A...</h3>
 					</div>
 				</div>
 			</div>
