@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>iOS开发:CADisplayLink的循环引用问题 | 好啵的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="haoboxuxu">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.3.9',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/css/main.min.css">
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.jside.menu.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "greenish",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+<div class="single">
+<a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div id="lx-aside" style="background-image: url(/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
+  <div class="overlay">
+  <div class="page-title">
+    <div class="avatar"><a href="/"><img src="/images/avatar.jpg"></a></div>
+    <span>2021-12-15</span>
+    <h2>iOS开发:CADisp...</h2>
+    
+    <div class="social-links">
+    <a href="https://github.com/haoboxuxu" target="_blank"><i class="fa fa-github fa-fw"></i></a>
+    <a href="https://weibo.com/haoboxuxu" target="_blank"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://twitter.com/haoboxuxu" target="_blank"><i class="fa fa-twitter fa-fw"></i></a>
+</div></div>
+</div>
+</div>
+
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <hr>
+<p>讨论weak self不能解决的循环引用</p>
+<span id="more"></span>
+
+<h5 id="一般情况ViewController的deinit"><a href="#一般情况ViewController的deinit" class="headerlink" title="一般情况ViewController的deinit"></a>一般情况ViewController的deinit</h5><p>比如在主ViewController里push进VC2</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span>()</span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        <span class="comment">// Do any additional setup after loading the view.</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">@IBAction</span> <span class="function"><span class="keyword">func</span> <span class="title">pushBtn</span>(<span class="keyword">_</span> <span class="params">sender</span>: <span class="keyword">Any</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> vc <span class="operator">=</span> <span class="type">VC2</span>()</span><br><span class="line">        navigationController<span class="operator">?</span>.pushViewController(vc, animated: <span class="literal">true</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>VC2里简单看下deninit</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class VC2: UIViewController &#123;</span><br><span class="line">  override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line">        view.backgroundColor &#x3D; .systemCyan</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    override func viewWillLayoutSubviews() &#123;</span><br><span class="line">        super.viewWillLayoutSubviews()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    deinit &#123;</span><br><span class="line">        print(&quot;VC2 deinit&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当从VC2返回navigationController时可以看到”VC2 deinit”打印了</p>
+<h5 id="加入CADisplayLink"><a href="#加入CADisplayLink" class="headerlink" title="加入CADisplayLink"></a>加入CADisplayLink</h5><p>在VC2里加入CADisplayLink，我们知道CADisplayLink跟着屏幕刷新率走，可以搞一些Core Animation事情</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VC2</span>: <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> displayLink: <span class="type">CADisplayLink</span>?</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span>()</span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        view.backgroundColor <span class="operator">=</span> .systemCyan</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewWillLayoutSubviews</span>()</span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewWillLayoutSubviews()</span><br><span class="line">        displayLink <span class="operator">=</span> <span class="type">CADisplayLink</span>(target: <span class="keyword">self</span>, selector: #selector(displayLinkSel))</span><br><span class="line">        displayLink<span class="operator">?</span>.frameInterval <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">        displayLink<span class="operator">?</span>.add(to: <span class="type">RunLoop</span>.current, forMode: .default)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">@objc</span> <span class="function"><span class="keyword">func</span> <span class="title">displayLinkSel</span>()</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;displayLinkSel&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">deinit</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;VC2 deinit&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里运行看到每一frame刷新都打印了”displayLinkSel”，但是退出时候”VC2 deinit”没有打印，而且”displayLinkSel”一直继续打印，说明循环引用了<br>你可能会想用弱引用解决</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewWillLayoutSubviews</span>()</span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.viewWillLayoutSubviews()</span><br><span class="line">    <span class="keyword">weak</span> <span class="keyword">var</span> weakSelf <span class="operator">=</span> <span class="keyword">self</span></span><br><span class="line">    displayLink <span class="operator">=</span> <span class="type">CADisplayLink</span>(target: weakSelf, selector: #selector(displayLinkSel))</span><br><span class="line">    displayLink<span class="operator">?</span>.frameInterval <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">    displayLink<span class="operator">?</span>.add(to: <span class="type">RunLoop</span>.current, forMode: .default)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 或者让它nil</span></span><br><span class="line"><span class="keyword">deinit</span> &#123;</span><br><span class="line">    displayLink <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;VC2 deinit&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果还是一样，没有deinit触发，想验证的话可以lldb看下vc2</p>
+<h5 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h5><p>写一个代理，这里代理直接让他走消息转发机制，类似objc_mesgSend，我们知道iOS里回去class对象和meta-class对象的方法区找，直接转发就是当objc_mesgSend找不到fail掉的最后最后一步，这样提高效率</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyWeakProxy</span>: <span class="title">NSObject</span> </span>&#123;</span><br><span class="line">    <span class="keyword">weak</span> <span class="keyword">var</span> target: <span class="type">NSObjectProtocol</span>?</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">init</span>(<span class="params">target</span>: <span class="type">NSObjectProtocol</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.target <span class="operator">=</span> target</span><br><span class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">responds</span>(<span class="params">to</span> <span class="params">aSelector</span>: <span class="type">Selector</span>!)</span> -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (target<span class="operator">?</span>.responds(to: aSelector) <span class="operator">??</span> <span class="literal">false</span>) <span class="operator">||</span> <span class="keyword">super</span>.responds(to: aSelector)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">forwardingTarget</span>(<span class="params">for</span> <span class="params">aSelector</span>: <span class="type">Selector</span>!)</span> -&gt; <span class="keyword">Any</span><span class="operator">?</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> target</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后，我们让target是刚刚写的代理类</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewWillLayoutSubviews</span>()</span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.viewWillLayoutSubviews()</span><br><span class="line">    displayLink <span class="operator">=</span> <span class="type">CADisplayLink</span>(target: <span class="type">MyWeakProxy</span>(target: <span class="keyword">self</span>), selector: #selector(displayLinkSel))</span><br><span class="line">    displayLink<span class="operator">?</span>.frameInterval <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">    displayLink<span class="operator">?</span>.add(to: <span class="type">RunLoop</span>.current, forMode: .default)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 记得让displayLink暂停掉，不然还继续走#selector(displayLinkSel)就会经典的找不到方法runtime错误了。</span></span><br><span class="line"><span class="keyword">deinit</span> &#123;</span><br><span class="line">    displayLink<span class="operator">?</span>.isPaused <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;VC2 deinit&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后解释下为什么weak self不起作用，原因不复杂，就是传入时候strong引用了，相当于weakSelf!，这样设计也有道理，因为这玩意和runloop绑定的。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">weak</span> <span class="keyword">var</span> weakSelf <span class="operator">=</span> <span class="keyword">self</span></span><br><span class="line">displayLink <span class="operator">=</span> <span class="type">CADisplayLink</span>(target: weakSelf<span class="operator">!</span>, selector: #selector(displayLinkSel))</span><br></pre></td></tr></table></figure>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer-l.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="#">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>No newer post</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover next lx-cover-sm" style="background-image: url(/images/footer-r.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2021/12/08/iOS%E5%BC%80%E5%8F%91-Cocoapods%E5%88%9B%E5%BB%BA%E5%88%B0%E5%8F%91%E5%8C%85/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>iOS开发:C...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2021.<a href="/">好啵的博客</a><br><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button> 
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="/images/avatar.jpg" alt="haoboxuxu"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>haoboxuxu</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/local.search.js"></script>
+
+
+</body>
+</html>
