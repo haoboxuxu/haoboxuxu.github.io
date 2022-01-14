@@ -454,4 +454,25 @@
 
 ]]></content>
   </entry>
+  <entry>
+    <title>iOS开发:URLSchemes</title>
+    <url>/2022/01/13/iOS%E5%BC%80%E5%8F%91-URLSchemes/</url>
+    <content><![CDATA[<hr>
+<p>关于iOS开发URLSchemes和App跳转</p>
+<span id="more"></span>
+
+<p>我们都知道iOS每个App都是沙箱机制，App之前不共享磁盘空间，所以一些例如跳转到第三方App登陆以及跳转回来的逻辑就是通过URLSchemes完成的<br>最近碰到用支付宝登陆，便记录下。</p>
+<p>首先我们到target的Info里配置我们App的URLSchemes，他提供了跳转回我们App的URL逻辑</p>
+<img src="/2022/01/13/iOS%E5%BC%80%E5%8F%91-URLSchemes/1.jpg" class="" title="1.jpg">
+
+<p>比如我们在Safari中输入刚刚配置的PinkBook://<br>就可以跳转打开我们的App</p>
+<img src="/2022/01/13/iOS%E5%BC%80%E5%8F%91-URLSchemes/2.jpg" class="" title="2.jpg">
+
+<p>由于是接入支付宝的一件登陆SDK遇到的，所以这个逻辑在打开App跳转到支付宝以及支付宝验证后跳转回来时没有问题的。<br>但是你可能想看一些log日志，比如这里闭包回调的result，直接print看都不到，是因为App已经从后台切出去再切回来了(如果遇到被系统杀死或者App睡死了的情况下)。</p>
+<img src="/2022/01/13/iOS%E5%BC%80%E5%8F%91-URLSchemes/3.jpg" class="" title="3.jpg">
+
+<p>所以应该通过SceneDelegate的某个生命周期回调来看</p>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">scene</span>(<span class="keyword">_</span> <span class="params">scene</span>: <span class="type">UIScene</span>, <span class="params">openURLContexts</span> <span class="params">URLContexts</span>: <span class="type">Set</span>&lt;<span class="type">UIOpenURLContext</span>&gt;)</span> &#123;</span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> url <span class="operator">=</span> <span class="type">URLContexts</span>.first<span class="operator">?</span>.url <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">        <span class="keyword">if</span> url.host <span class="operator">==</span> <span class="string">&quot;safepay&quot;</span> &#123;</span><br><span class="line">            <span class="type">AlipaySDK</span>.defaultService()<span class="operator">?</span>.processAuth_V2Result(url) &#123; result <span class="keyword">in</span></span><br><span class="line">                <span class="comment">// ...</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
 </search>
