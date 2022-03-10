@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#EFAF3B>
+  <title>iOS开发:MVP | 好啵的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="haoboxuxu">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.3.9',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/css/main.min.css">
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.jside.menu.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "greenish",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+<div class="single">
+<a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div id="lx-aside" style="background-image: url(/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
+  <div class="overlay">
+  <div class="page-title">
+    <div class="avatar"><a href="/"><img src="/images/avatar.jpg"></a></div>
+    <span>2022-03-10</span>
+    <h2>iOS开发:MVP</h2>
+    
+    <div class="social-links">
+    <a href="https://github.com/haoboxuxu" target="_blank"><i class="fa fa-github fa-fw"></i></a>
+    <a href="https://weibo.com/haoboxuxu" target="_blank"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://twitter.com/haoboxuxu" target="_blank"><i class="fa fa-twitter fa-fw"></i></a>
+</div></div>
+</div>
+</div>
+
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <hr>
+<p>iOS MVP模式，<a target="_blank" rel="noopener" href="https://github.com/haoboxuxu/iOSDummyDemos/tree/main/Design%20Patterns">Github代码在此</a></p>
+<span id="more"></span>
+
+<p>上次说到MVVM，这次说MVP<br>MVVM更多强调View和ViewModel的联系，MVP是把一部分的VC逻辑转移到Presenter<br>如图（图无VC，同理，并不是说VC省去了，只是没画…）</p>
+<img src="/2022/03/10/iOS%E5%BC%80%E5%8F%91-MVP/1.jpg" class="" title="1.jpg">
+
+<p>还是写个TableView，这次带网络请求，所以目标就是把网络请求的代码扔到Presenter里给我们的VC减减肥，<br>在Presenter里，还是和MVC一样的delegate思想，要求调用的VC遵循这个协议，并且封装了网络请求和其他的业务逻辑</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">UserPresenterDelegate</span>: <span class="title">AnyObject</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">presentUsers</span>(<span class="params">users</span>: [<span class="type">User</span>])</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">presentAlert</span>(<span class="params">title</span>: <span class="type">String</span>, <span class="params">message</span>: <span class="type">String</span>)</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typealias</span> <span class="type">Presenter</span> <span class="operator">=</span> <span class="type">UserPresenterDelegate</span> &amp; <span class="type">UIViewController</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserPresenter</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">weak</span> <span class="keyword">var</span> delegate: <span class="type">UserPresenterDelegate</span>?</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">setViewDelegate</span>(<span class="params">delegate</span>: <span class="type">Presenter</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.delegate <span class="operator">=</span> delegate</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">getUsers</span>()</span> &#123;</span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> url <span class="operator">=</span> <span class="type">URL</span>(string: <span class="string">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>) <span class="keyword">else</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="type">URLSession</span>.shared.dataTask(with: url) &#123; [<span class="keyword">weak</span> <span class="keyword">self</span>] data, <span class="keyword">_</span>, error <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> data <span class="operator">=</span> data, error <span class="operator">==</span> <span class="literal">nil</span> <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> users <span class="operator">=</span> <span class="keyword">try</span> <span class="type">JSONDecoder</span>().decode([<span class="type">User</span>].<span class="keyword">self</span>, from: data)</span><br><span class="line">                <span class="built_in">print</span>(users)</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">self</span><span class="operator">?</span>.delegate<span class="operator">?</span>.presentUsers(users: users)</span><br><span class="line">            &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">                <span class="built_in">print</span>(error)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.resume()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Model里就是简单的解码json数据</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">User</span>: <span class="title">Codable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> name: <span class="type">String</span></span><br><span class="line">    <span class="keyword">let</span> email: <span class="type">String</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在VC里要遵循Presenter的协议，然后通过presenter请求数据，更新tableview，例子很简单，可以看到把网络请求的功能从VC挪走<br>后续需要扩展业务的话可以在PresenterDelegate里增加，然后在VC里回调</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserVC</span>: <span class="title">UIViewController</span>, <span class="title">UITableViewDelegate</span>, <span class="title">UITableViewDataSource</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> tableView: <span class="type">UITableView</span> <span class="operator">=</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> tableView <span class="operator">=</span> <span class="type">UITableView</span>()</span><br><span class="line">        tableView.register(<span class="type">UITableViewCell</span>.<span class="keyword">self</span>, forCellReuseIdentifier: <span class="string">&quot;cell&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> tableView</span><br><span class="line">    &#125;()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">let</span> presenter <span class="operator">=</span> <span class="type">UserPresenter</span>()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> users: [<span class="type">User</span>] <span class="operator">=</span> []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span>()</span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        title <span class="operator">=</span> <span class="string">&quot;Users&quot;</span></span><br><span class="line">        </span><br><span class="line">        presenter.delegate <span class="operator">=</span> <span class="keyword">self</span></span><br><span class="line">        presenter.getUsers()</span><br><span class="line">        </span><br><span class="line">        view.addSubview(tableView)</span><br><span class="line">        tableView.delegate <span class="operator">=</span> <span class="keyword">self</span></span><br><span class="line">        tableView.dataSource <span class="operator">=</span> <span class="keyword">self</span></span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLayoutSubviews</span>()</span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLayoutSubviews()</span><br><span class="line">        tableView.frame <span class="operator">=</span> view.bounds</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span>(<span class="keyword">_</span> <span class="params">tableView</span>: <span class="type">UITableView</span>, <span class="params">cellForRowAt</span> <span class="params">indexPath</span>: <span class="type">IndexPath</span>)</span> -&gt; <span class="type">UITableViewCell</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> cell <span class="operator">=</span> tableView.dequeueReusableCell(withIdentifier: <span class="string">&quot;cell&quot;</span>, for: indexPath)</span><br><span class="line">        <span class="keyword">let</span> user <span class="operator">=</span> <span class="keyword">self</span>.users[indexPath.row]</span><br><span class="line">        cell.textLabel<span class="operator">?</span>.text <span class="operator">=</span> <span class="string">&quot;👾<span class="subst">\(user.name)</span> 📧<span class="subst">\(user.email)</span>&quot;</span></span><br><span class="line">        <span class="keyword">return</span> cell</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span>(<span class="keyword">_</span> <span class="params">tableView</span>: <span class="type">UITableView</span>, <span class="params">numberOfRowsInSection</span> <span class="params">section</span>: <span class="type">Int</span>)</span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        users.count</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span>(<span class="keyword">_</span> <span class="params">tableView</span>: <span class="type">UITableView</span>, <span class="params">didSelectRowAt</span> <span class="params">indexPath</span>: <span class="type">IndexPath</span>)</span> &#123;</span><br><span class="line">        tableView.deselectRow(at: indexPath, animated: <span class="literal">true</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">UserVC</span>: <span class="title">UserPresenterDelegate</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">presentUsers</span>(<span class="params">users</span>: [<span class="type">User</span>])</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.users <span class="operator">=</span> users</span><br><span class="line">        </span><br><span class="line">        <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">            <span class="keyword">self</span>.tableView.reloadData()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">presentAlert</span>(<span class="params">title</span>: <span class="type">String</span>, <span class="params">message</span>: <span class="type">String</span>)</span> &#123;</span><br><span class="line">        <span class="comment">//更多的业务</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/03/10/iOS%E5%BC%80%E5%8F%91-MVP/2.jpg" class="" title="2.jpg">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer-l.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="#">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>No newer post</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover next lx-cover-sm" style="background-image: url(/images/footer-r.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2022/02/25/iOS%E5%BC%80%E5%8F%91-MVVM/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>iOS开发:M...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">好啵的博客</a><br><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button> 
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="/images/avatar.jpg" alt="haoboxuxu"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>haoboxuxu</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/local.search.js"></script>
+
+
+</body>
+</html>
