@@ -102,6 +102,14 @@
 
   <div class="lx-entry padding">
     <div>
+      <h2 class="title"><a href="/2022/08/30/Swift-RX01/">Swift: RX01</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2022-08-30</span>
+      <p><hr></p>
+      <div class="post-button"><a class="btn" href="/2022/08/30/Swift-RX01/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
       <h2 class="title"><a href="/2022/06/26/iOS%E5%BC%80%E5%8F%91-Coordinator/">iOS开发-Coordinator</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2022-06-26</span>
       <p><hr>
@@ -113,18 +121,7 @@
     <div>
       <h2 class="title"><a href="/2022/05/30/Swift-%E5%87%BD%E6%95%B0%E5%BC%8F%E5%92%8C%E6%9F%AF%E9%87%8C%E5%8C%96/">Swift: 函数式和柯里化</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2022-05-30</span>
-      <p><p>比如我们要实现一个+1的功能，我们可以这样写</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">addOne</span>(<span class="params">num</span>: <span class="type">Int</span>)</span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">   <span class="keyword">return</span> num <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>坏处就在于这个函数不能复用，如果是一些需要常用的方法，可以柯里化出一个函数模板</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">adder</span>(<span class="keyword">_</span> <span class="params">adder</span>: <span class="type">Int</span>)</span> -&gt; (<span class="type">Int</span>) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">   <span class="keyword">return</span> &#123; num <span class="keyword">in</span></span><br><span class="line">       <span class="keyword">return</span> num <span class="operator">+</span> adder</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>addTwo是一个(Int) -&gt; Int类型的闭包，吃一个Int类型，所以就是返回6 + 2<br>我们可以对这个闭包进行复用</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> addTwo <span class="operator">=</span> adder(<span class="number">2</span>)</span><br><span class="line"><span class="keyword">let</span> result <span class="operator">=</span> addTwo(<span class="number">6</span>)</span><br><span class="line"><span class="built_in">print</span>(result) <span class="comment">// 8</span></span><br></pre></td></tr></table></figure>
-
-<p>另外一个柯里化的例子</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">greaterThan</span>(<span class="keyword">_</span> <span class="params">comparer</span>: <span class="type">Int</span>)</span> -&gt; (<span class="type">Int</span>) -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">   <span class="keyword">return</span> &#123; <span class="variable">$0</span> <span class="operator">&gt;</span> comparer &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> greaterThan10 <span class="operator">=</span> greaterThan(<span class="number">10</span>);</span><br><span class="line">greaterThan10(<span class="number">13</span>)    <span class="comment">// =&gt; true</span></span><br><span class="line">greaterThan10(<span class="number">9</span>)     <span class="comment">// =&gt; false</span></span><br></pre></td></tr></table></figure>
-
-<p>关于逃逸闭包（暂时就先写在这篇吧）</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">doWork</span>(<span class="params">block</span>: ()-&gt;())</span> &#123;</span><br><span class="line">    block()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">doWorkAsync</span>(<span class="params">block</span>: <span class="keyword">@escaping</span> ()-&gt;())</span> &#123;</span><br><span class="line">    <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">        block()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> foo <span class="operator">=</span> <span class="string">&quot;a&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">method1</span>()</span> &#123;</span><br><span class="line">        doWork &#123;</span><br><span class="line">            <span class="built_in">print</span>(foo)</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        foo <span class="operator">=</span> <span class="string">&quot;b&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">method2</span>()</span> &#123;</span><br><span class="line">        doWorkAsync &#123;</span><br><span class="line">            <span class="built_in">print</span>(<span class="keyword">self</span>.foo)</span><br><span class="line">        &#125;</span><br><span class="line">        foo <span class="operator">=</span> <span class="string">&quot;b&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">method3</span>()</span> &#123;</span><br><span class="line">       doWorkAsync &#123; [<span class="keyword">weak</span> <span class="keyword">self</span>] <span class="keyword">in</span></span><br><span class="line">           <span class="built_in">print</span>(<span class="keyword">self</span><span class="operator">?</span>.foo <span class="operator">??</span> <span class="string">&quot;nil&quot;</span>)</span><br><span class="line">       &#125;</span><br><span class="line">        foo <span class="operator">=</span> <span class="string">&quot;b&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">Test</span>().method1() <span class="comment">// a</span></span><br><span class="line"><span class="type">Test</span>().method2() <span class="comment">// b</span></span><br><span class="line"><span class="type">Test</span>().method3() <span class="comment">// nil</span></span><br></pre></td></tr></table></figure></p>
+      <p><hr></p>
       <div class="post-button"><a class="btn" href="/2022/05/30/Swift-%E5%87%BD%E6%95%B0%E5%BC%8F%E5%92%8C%E6%9F%AF%E9%87%8C%E5%8C%96/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
@@ -191,19 +188,10 @@
       <div class="post-button"><a class="btn" href="/2021/10/21/iOS%E5%BC%80%E5%8F%91-Apple-Silicon%E4%B8%8BXcode%E7%BC%96%E8%AF%91arm64%E9%94%99%E8%AF%AF/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2021/10/05/iOS%E5%BC%80%E5%8F%91-Swift%E6%B7%B7%E7%BC%96%E6%A1%A5%E6%8E%A5OC/">iOS开发:Swift混编桥接OC</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2021-10-05</span>
-      <p><hr>
-<p>关于iOS开发Swift混编桥接OC技巧</p></p>
-      <div class="post-button"><a class="btn" href="/2021/10/05/iOS%E5%BC%80%E5%8F%91-Swift%E6%B7%B7%E7%BC%96%E6%A1%A5%E6%8E%A5OC/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
-    </div>
-  </div>
 
 
 <div id="pagination">
-  <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"></a>
+  <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"></a>
 </div>
 
 <footer>
