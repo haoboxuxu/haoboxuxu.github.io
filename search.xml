@@ -464,4 +464,29 @@
 <p>我们也可以按照系统的思路实现自己的hitTest</p>
 <figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HitTestExampleView</span>: <span class="title">UIView</span> </span>&#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">hitTest</span>(<span class="keyword">_</span> <span class="params">point</span>: <span class="type">CGPoint</span>, <span class="params">with</span> <span class="params">event</span>: <span class="type">UIEvent</span>?)</span> -&gt; <span class="type">UIView</span>? &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="operator">!</span>isUserInteractionEnabled <span class="operator">||</span> isHidden <span class="operator">||</span> alpha <span class="operator">&lt;=</span> <span class="number">0.01</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span> <span class="comment">// 此处指视图无法接受事件</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">self</span>.point(inside: point, with: event) &#123; <span class="comment">// 判断触摸点是否在自身内部</span></span><br><span class="line">            <span class="keyword">for</span> subview <span class="keyword">in</span> subviews.reversed() &#123; <span class="comment">// 按 FILO 遍历子视图</span></span><br><span class="line">                <span class="keyword">let</span> convertedPoint <span class="operator">=</span> subview.convert(point, from: <span class="keyword">self</span>)</span><br><span class="line">                <span class="keyword">let</span> resultView <span class="operator">=</span> subview.hitTest(convertedPoint, with: event) </span><br><span class="line">                <span class="comment">// ⬆️这句是判断触摸点是否在子视图内部，在就返回视图，不在就返回nil</span></span><br><span class="line">                <span class="keyword">if</span> resultView <span class="operator">!=</span> <span class="literal">nil</span> &#123; <span class="keyword">return</span> resultView &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">self</span> <span class="comment">// 此处指该视图的所有子视图都不符合要求，而触摸点又在该视图自身内部</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span> <span class="comment">// 此处指触摸点是否不在该视图内部</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
+  <entry>
+    <title>App Privacy: iRSS</title>
+    <url>/2023/02/22/App-Privacy-iRSS/</url>
+    <content><![CDATA[<hr>
+<p>App Privacy: iRSS</p>
+<span id="more"></span>
+
+<p>App don’t collect any of your personal data<br> contact me on <a href="https://github.com/haoboxuxu">github</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Swift源码01</title>
+    <url>/2022/10/06/Swift%E6%BA%90%E7%A0%8101/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone --branch swift-5.7-RELEASE https:&#x2F;&#x2F;github.com&#x2F;apple&#x2F;swift.git</span><br><span class="line">utils&#x2F;update-checkout --tag swift-5.7-RELEASE --clone</span><br><span class="line">sudo .&#x2F;swift&#x2F;utils&#x2F;build-script -x -R --debug-swift --debug-swift-stdlib</span><br><span class="line">utils&#x2F;build-script --xcode</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo .&#x2F;swift&#x2F;utils&#x2F;build-script --skip-build-benchmarks \</span><br><span class="line">  --skip-ios --skip-watchos --skip-tvos --skip-test-cmark --swift-darwin-supported-archs &quot;$(uname -m)&quot; \</span><br><span class="line">  --sccache --release-debuginfo --swift-disable-dead-stripping --test \</span><br><span class="line">  --xcode</span><br><span class="line">  </span><br><span class="line">sudo .&#x2F;swift&#x2F;utils&#x2F;build-script --skip-build-benchmarks --skip-ios --skip-watchos --skip-tvos --swift-darwin-supported-archs &quot;$(uname -m)&quot; --sccache --release-debuginfo --xcode</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo .&#x2F;utils&#x2F;utils&#x2F;build-script --skip-build-benchmarks \</span><br><span class="line">  --skip-ios --skip-watchos --skip-tvos --swift-darwin-supported-archs &quot;x86_64&quot; \</span><br><span class="line">  --sccache --release-debuginfo --test \</span><br><span class="line">  --xcode</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">--skip-test-cmark</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;swift&#x2F;utils&#x2F;build-script -r --debug-swift-stdlib --lldb</span><br></pre></td></tr></table></figure>
+
+]]></content>
+  </entry>
 </search>
