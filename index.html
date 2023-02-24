@@ -102,28 +102,27 @@
 
   <div class="lx-entry padding">
     <div>
-      <h2 class="title"><a href="/2023/02/22/App-Privacy-iRSS/">App Privacy: iRSS</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2023-02-22</span>
+      <h2 class="title"><a href="/2023/02/21/App-Privacy-iRSS/">App Privacy: iRSS</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2023-02-21</span>
       <p><hr>
 <p>App Privacy: iRSS</p></p>
-      <div class="post-button"><a class="btn" href="/2023/02/22/App-Privacy-iRSS/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2023/02/21/App-Privacy-iRSS/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2023/02/21/App-Support-iRSS/">App Support: iRSS</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2023-02-21</span>
+      <p><hr>
+<p>App Support: iRSS</p></p>
+      <div class="post-button"><a class="btn" href="/2023/02/21/App-Support-iRSS/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
     <div>
       <h2 class="title"><a href="/2022/10/06/Swift%E6%BA%90%E7%A0%8101/">Swift源码01</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2022-10-06</span>
-      <p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone --branch swift-5.7-RELEASE https:&#x2F;&#x2F;github.com&#x2F;apple&#x2F;swift.git</span><br><span class="line">utils&#x2F;update-checkout --tag swift-5.7-RELEASE --clone</span><br><span class="line">sudo .&#x2F;swift&#x2F;utils&#x2F;build-script -x -R --debug-swift --debug-swift-stdlib</span><br><span class="line">utils&#x2F;build-script --xcode</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo .&#x2F;swift&#x2F;utils&#x2F;build-script --skip-build-benchmarks \</span><br><span class="line">  --skip-ios --skip-watchos --skip-tvos --skip-test-cmark --swift-darwin-supported-archs &quot;$(uname -m)&quot; \</span><br><span class="line">  --sccache --release-debuginfo --swift-disable-dead-stripping --test \</span><br><span class="line">  --xcode</span><br><span class="line">  </span><br><span class="line">sudo .&#x2F;swift&#x2F;utils&#x2F;build-script --skip-build-benchmarks --skip-ios --skip-watchos --skip-tvos --swift-darwin-supported-archs &quot;$(uname -m)&quot; --sccache --release-debuginfo --xcode</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo .&#x2F;utils&#x2F;utils&#x2F;build-script --skip-build-benchmarks \</span><br><span class="line">  --skip-ios --skip-watchos --skip-tvos --swift-darwin-supported-archs &quot;x86_64&quot; \</span><br><span class="line">  --sccache --release-debuginfo --test \</span><br><span class="line">  --xcode</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--skip-test-cmark</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;swift&#x2F;utils&#x2F;build-script -r --debug-swift-stdlib --lldb</span><br></pre></td></tr></table></figure>
-
-</p>
+      <p><hr></p>
       <div class="post-button"><a class="btn" href="/2022/10/06/Swift%E6%BA%90%E7%A0%8101/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
@@ -131,13 +130,7 @@
     <div>
       <h2 class="title"><a href="/2022/09/03/iOS-%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92/">iOS: 触摸事件传递</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2022-09-03</span>
-      <p><p>1 用户点击屏幕后产生的一个触摸事件，经过一系列的传递过程后，会找到最合适的视图控件来处理这个事件<br>2 找到最合适的视图控件后，就会调用控件的touches方法来作具体的事件处理。touchesBegan…touchesMoved…touchedEnded…<br>3 这些touches方法的默认做法是将事件顺着响应者链条向上传递，将事件交给上一个响应者进行处理</p>
-<p>我们可以试验一下，一个简单的VC的View只有一个SubView的App，对touches的处理，<br>如果我们不写next?.touchesBegan(touches, with: event)，那么点击SubView只有一个print，因为当前的响应者就是那个subview</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">UIApplication</span> </span>&#123;</span><br><span class="line">    <span class="keyword">open</span> <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">touchesBegan</span>(<span class="keyword">_</span> <span class="params">touches</span>: <span class="type">Set</span>&lt;<span class="type">UITouch</span>&gt;, <span class="params">with</span> <span class="params">event</span>: <span class="type">UIEvent</span>?)</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;UIApplication touchesBegan&quot;</span>)</span><br><span class="line">        next<span class="operator">?</span>.touchesBegan(touches, with: event)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">UIViewController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">open</span> <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">touchesBegan</span>(<span class="keyword">_</span> <span class="params">touches</span>: <span class="type">Set</span>&lt;<span class="type">UITouch</span>&gt;, <span class="params">with</span> <span class="params">event</span>: <span class="type">UIEvent</span>?)</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;UIViewController touchesBegan&quot;</span>)</span><br><span class="line">        next<span class="operator">?</span>.touchesBegan(touches, with: event)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">UIView</span> </span>&#123;</span><br><span class="line">    <span class="keyword">open</span> <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">touchesBegan</span>(<span class="keyword">_</span> <span class="params">touches</span>: <span class="type">Set</span>&lt;<span class="type">UITouch</span>&gt;, <span class="params">with</span> <span class="params">event</span>: <span class="type">UIEvent</span>?)</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;UIView touchesBegan&quot;</span>)</span><br><span class="line">        next<span class="operator">?</span>.touchesBegan(touches, with: event)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>带上next?.touchesBegan(touches, with: event)，可以看到输出如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">UIView touchesBegan</span><br><span class="line">UIViewController touchesBegan</span><br><span class="line">UIView touchesBegan</span><br><span class="line">UIView touchesBegan</span><br><span class="line">UIView touchesBegan</span><br><span class="line">UIApplication touchesBegan</span><br></pre></td></tr></table></figure>
-<p>我们也可以按照系统的思路实现自己的hitTest</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HitTestExampleView</span>: <span class="title">UIView</span> </span>&#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">hitTest</span>(<span class="keyword">_</span> <span class="params">point</span>: <span class="type">CGPoint</span>, <span class="params">with</span> <span class="params">event</span>: <span class="type">UIEvent</span>?)</span> -&gt; <span class="type">UIView</span>? &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="operator">!</span>isUserInteractionEnabled <span class="operator">||</span> isHidden <span class="operator">||</span> alpha <span class="operator">&lt;=</span> <span class="number">0.01</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span> <span class="comment">// 此处指视图无法接受事件</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">self</span>.point(inside: point, with: event) &#123; <span class="comment">// 判断触摸点是否在自身内部</span></span><br><span class="line">            <span class="keyword">for</span> subview <span class="keyword">in</span> subviews.reversed() &#123; <span class="comment">// 按 FILO 遍历子视图</span></span><br><span class="line">                <span class="keyword">let</span> convertedPoint <span class="operator">=</span> subview.convert(point, from: <span class="keyword">self</span>)</span><br><span class="line">                <span class="keyword">let</span> resultView <span class="operator">=</span> subview.hitTest(convertedPoint, with: event) </span><br><span class="line">                <span class="comment">// ⬆️这句是判断触摸点是否在子视图内部，在就返回视图，不在就返回nil</span></span><br><span class="line">                <span class="keyword">if</span> resultView <span class="operator">!=</span> <span class="literal">nil</span> &#123; <span class="keyword">return</span> resultView &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">self</span> <span class="comment">// 此处指该视图的所有子视图都不符合要求，而触摸点又在该视图自身内部</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span> <span class="comment">// 此处指触摸点是否不在该视图内部</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+      <p><hr></p>
       <div class="post-button"><a class="btn" href="/2022/09/03/iOS-%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
@@ -189,15 +182,6 @@
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2022-05-30</span>
       <p><hr></p>
       <div class="post-button"><a class="btn" href="/2022/05/30/Swift-%E5%87%BD%E6%95%B0%E5%BC%8F%E5%92%8C%E6%9F%AF%E9%87%8C%E5%8C%96/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
-    </div>
-  </div>
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2022/03/10/iOS%E5%BC%80%E5%8F%91-MVP/">iOS开发:MVP</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2022-03-10</span>
-      <p><hr>
-<p>iOS MVP模式，<a target="_blank" rel="noopener" href="https://github.com/haoboxuxu/iOSDummyDemos/tree/main/Design%20Patterns">Github代码在此</a></p></p>
-      <div class="post-button"><a class="btn" href="/2022/03/10/iOS%E5%BC%80%E5%8F%91-MVP/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
 
